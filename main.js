@@ -1,5 +1,6 @@
 const http = require("http");
 const fs = require("fs");
+const crypto = require("crypto");
 const WebSocket = require("ws");
 
 async function makeHtml(prompt) {
@@ -55,6 +56,7 @@ function writeToFile(html) {
             if (err) {
               console.log(err);
             } else {
+              sendToStatic(html, num);
               console.log("The file has been saved!");
             }
           });
@@ -64,10 +66,59 @@ function writeToFile(html) {
   });
 }
 
+async function sendToStatic(html, name) {
+  const response = await fetch("http://localhost:3009", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ file: html, filename: name }),
+  });
+  const data = await response.json();
+  console.log(data);
+}
+
 // Create an instance of the http server to handle HTTP requests
 const server = http.createServer((req, res) => {
-  res.writeHead(200, { "Content-Type": "text/plain" });
-  res.end("okay");
+  const { method, url } = req;
+  if (method === "OPTIONS") {
+    res.writeHead(200, {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "OPTIONS, POST",
+      "Access-Control-Allow-Headers": "Content-Type",
+    });
+    res.end();
+  } else if (method === "POST" && url === "/") {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk;
+    });
+    req.on("end", () => {
+      const data = JSON.parse(body);
+      console.log(data);
+      if (data.action === "prompt") {
+        makeHtml(data.input).then((html) => {
+          const hash = crypto.createHash("sha256").update(html).digest("hex");
+          sendToStatic(html, hash).then(() => {
+            console.log("success");
+            console.log(hash);
+            res.writeHead(200, {
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "application/json",
+            });
+            res.end(JSON.stringify({ message: "Success", filename: hash }));
+            return;
+          });
+        });
+      } else {
+        res.writeHead(500, {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        });
+        res.end(JSON.stringify({ message: "Error" }));
+      }
+    });
+  }
 });
 
 // Start the server on port 3015
@@ -81,12 +132,5 @@ wss.on("connection", function connection(ws) {
   console.log("connected");
   ws.on("message", function incoming(message) {
     console.log("received: %s", message);
-    const data = JSON.parse(message);
-    if (data.action === "prompt") {
-      makeHtml(data.input).then((html) => {
-        console.log("html", html);
-        writeToFile(html);
-      });
-    }
   });
 });

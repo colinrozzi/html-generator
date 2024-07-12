@@ -3,32 +3,45 @@
   <head>
     <title>html maker</title>
   </head>
+
   <body>
     <p>input html</p>
+    <div id="filelink">no file generated</div>
     <textarea id="input" style="width: 100%; height: 200px"></textarea>
     <button id="send">make</button>
     <script>
-      const ws = new WebSocket("ws://localhost:3015");
-
-      ws.onerror = (err) => {
-        console.error(err);
-      };
-
-      ws.onopen = () => {
-        console.log("connected");
-      };
-
+      console.log("running");
       const send = document.getElementById("send");
 
-      send.addEventListener("click", () => {
+      send.addEventListener("click", async () => {
+        console.log("running");
         const input = document.getElementById("input").value;
-        ws.send(
-          JSON.stringify({
+        const filelink = document.getElementById("filelink");
+        filelink.innerHTML = "loading...";
+        const response = await fetch("http://localhost:3015", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
             action: "prompt",
             input,
           }),
-        );
+        });
+        console.log("response back");
+        if (!response.ok) {
+          console.log(response);
+          filelink.innerHTML = "error";
+          return;
+        }
+        // make a link to the new page
+        const data = await response.json();
+        filelink.innerHTML = `<a href="http://localhost:3009/${data.filename}">${data.filename}</a>`;
+        console.log(response);
+
+        console.log("setup");
       });
     </script>
   </body>
 </html>
+

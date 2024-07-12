@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is the Tour de France?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .collapsible {
+            cursor: pointer;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Tour de France Guide!</h1>
+    </header>
+
+    <section class="section" id="introduction">
+        <h2>Introduction</h2>
+        <p>The Tour de France is one of the most famous and prestigious cycling races in the world. It takes place annually in France and occasionally in nearby countries. The event lasts for three weeks and covers approximately 3,500 kilometers (2,200 miles).</p>
+    </section>
+
+    <section class="section" id="history">
+        <h2>History</h2>
+        <p>The Tour de France was first organized in 1903 to increase sales for the newspaper L'Auto. Since then, it has become a beloved tradition, only interrupted during the two World Wars.</p>
+    </section>
+
+    <section class="section" id="structure">
+        <h2>How It Works</h2>
+        <button type="button" class="collapsible">Stages and Terrain</button>
+        <div class="content">
+            <p>The race is divided into 21 stages, with each stage being a different type of terrain. There are flat stages, mountain stages, and time trials. Riders compete for the best time in each stage.</p>
+        </div>
+        <button type="button" class="collapsible">Jerseys and Classification</button>
+        <div class="content">
+            <p>Several classifications exist within the race, including the General Classification (Yellow Jersey), Points Classification (Green Jersey), Mountains Classification (Polka Dot Jersey), and Best Young Rider (White Jersey).</p>
+        </div>
+    </section>
+
+    <section class="section" id="riders-teams">
+        <h2>Famous Riders and Teams</h2>
+        <p>Legends like Eddy Merckx, Bernard Hinault, and recent stars like Chris Froome and Tadej Pogačar have made their mark on the Tour. Notable teams include Team Ineos, UAE Team Emirates, and Movistar Team.</p>
+    </section>
+
+    <section class="section" id="excitement">
+        <h2>Why It’s Exciting</h2>
+        <p>The Tour de France offers breathtaking scenery, intense competition, and incredible displays of endurance and teamwork. The race is known for its dramatic climbs in the Alps and Pyrenees, where riders battle gravity and each other to claim victory.</p>
+        <img src="tour-de-france.jpg" alt="Tour de France">
+    </section>
+
+    <section class="section" id="facts">
+        <h2>Interesting Facts</h2>
+        <ul>
+            <li>The longest Tour was in 1926, covering 5,745 kilometers (3,570 miles).</li>
+            <li>Riders burn approximately 123,000 calories over the 21 stages.</li>
+            <li>More than 12 million spectators line the route each year.</li>
+        </ul>
+    </section>
+
+    <section class="section" id="call-to-action">
+        <h2>Get Involved!</h2>
+        <p>Now that you know more about the Tour de France, why not watch the next race? It's an experience like no other!</p>
+    </section>
+
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        for (var i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
