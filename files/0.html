@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is the Tour de France?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        section {
+            margin-top: 30px;
+        }
+        .yellow {
+            color: #f1c40f;
+        }
+        .green {
+            color: #2ecc71;
+        }
+        .polka-dot {
+            color: #e74c3c;
+        }
+        .white {
+            color: #ecf0f1;
+        }
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            margin: 20px 0;
+        }
+        .slides {
+            display: none;
+        }
+        img {
+            width: 100%;
+            height: auto;
+        }
+        .dots {
+            text-align: center;
+        }
+        .dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+        .active {
+            background-color: #717171;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>What is the Tour de France?</h1>
+    </header>
+
+    <section>
+        <h2>Introduction</h2>
+        <p>The Tour de France is an annual men's multiple-stage bicycle race primarily held in France, while also occasionally passing through nearby countries. Celebrated as one of cycling's Grand Tours, it is typically held in July and covers approximately 3,500 kilometers (2,200 mi).</p>
+    </section>
+
+    <section>
+        <h2>History</h2>
+        <p>The Tour de France was first organized in 1903 to increase sales for the newspaper L'Auto. It has been held annually since, with the exception of times during the two World Wars.</p>
+    </section>
+
+    <section>
+        <h2>Format</h2>
+        <p>The race is divided into 21 stages, each with varying difficulties, including flat stages, mountain stages, and time trials. Riders compete both for individual stage wins and for the overall fastest time across all stages.</p>
+    </section>
+
+    <section>
+        <h2>Teams and Jerseys</h2>
+        <ul>
+            <li><span class="yellow">Yellow Jersey</span>: Worn by the overall race leader.</li>
+            <li><span class="green">Green Jersey</span>: Awarded for sprint points.</li>
+            <li><span class="polka-dot">Polka-Dot Jersey</span>: Given to the best climber.</li>
+            <li><span class="white">White Jersey</span>: For the best young rider.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Famous Riders</h2>
+        <p>Some of the most famous riders include Eddy Merckx, Bernard Hinault, and more recently, Chris Froome. These athletes are celebrated for their multiple tour wins and their impact on the sport.</p>
+    </section>
+
+    <section>
+        <h2>Interactive Slideshow</h2>
+        <div class="slideshow-container">
+            <div class="slides">
+                <img src="https://via.placeholder.com/800x400?text=Stage+1" alt="Stage 1">
+            </div>
+            <div class="slides">
+                <img src="https://via.placeholder.com/800x400?text=Stage+2" alt="Stage 2">
+            </div>
+            <div class="slides">
+                <img src="https://via.placeholder.com/800x400?text=Stage+3" alt="Stage 3">
+            </div>
+        </div>
+        <div class="dots">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </section>
+
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+        }
+    </script>
+
+</body>
+</html>

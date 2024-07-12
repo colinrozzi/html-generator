@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <title>html maker</title>
+  </head>
+  <body>
+    <p>input html</p>
+    <textarea id="input" style="width: 100%; height: 200px"></textarea>
+    <button id="send">make</button>
+    <script>
+      const ws = new WebSocket("ws://localhost:3015");
+
+      ws.onerror = (err) => {
+        console.error(err);
+      };
+
+      ws.onopen = () => {
+        console.log("connected");
+      };
+
+      const send = document.getElementById("send");
+
+      send.addEventListener("click", () => {
+        const input = document.getElementById("input").value;
+        ws.send(
+          JSON.stringify({
+            action: "prompt",
+            input,
+          }),
+        );
+      });
+    </script>
+  </body>
+</html>
